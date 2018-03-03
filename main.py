@@ -51,6 +51,32 @@ def start():
         'head_url': head_url
     }
 
+def findFood(snake):
+	data = bottle.request.json
+	snek = snake
+	foodList = data.get('food')['data']
+	minX=100
+	minY=100
+	min_len=100
+	for object in foodList:
+		x= object['x']
+		y= object['y']
+
+		headX = snek['head']['x']
+		headY = snek['head']['y']
+		length = abs(headY-y) + abs(headX-x)
+		
+		print ([x,y])
+		print([headX,headY])
+		print 'food is this many steps away'
+		print length
+		print ''
+		if length < min_len:
+			minX = x
+			minY = y
+			min_len = length
+
+	return [minX, minY]
 
 @bottle.post('/move')
 def move():
